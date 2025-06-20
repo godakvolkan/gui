@@ -1,14 +1,13 @@
 import React from 'react';
 import { ChevronDown, Building, Palette, Wrench, Home, Star, ArrowRight, MapPin, Eye, CheckCircle, Award, Users, Clock } from 'lucide-react';
-import CertificationsSection from './CertificationsSection';
-import ProcessSection from './ProcessSection';
-import PricingSection from './PricingSection';
-import FAQSection from './FAQSection';
-import ReferencesSection from './ReferencesSection';
-import StatsDetailSection from './StatsDetailSection';
-import SocialMediaSection from './SocialMediaSection';
 
-const HomePage: React.FC = () => {
+type PageType = 'ana-sayfa' | 'hakkimizda' | 'projeler' | 'hizmetler' | 'iletisim' | 'sertifikalar' | 'surec' | 'fiyatlandirma' | 'sss' | 'wedding-discount';
+
+interface HomePageProps {
+  navigateToPage: (page: PageType) => void;
+}
+
+const HomePage: React.FC<HomePageProps> = ({ navigateToPage }) => {
   const stats = [
     { number: "150+", label: "Tamamlanan Proje" },
     { number: "12", label: "Yıllık Deneyim" },
@@ -91,27 +90,6 @@ const HomePage: React.FC = () => {
       comment: "Birçok projede birlikte çalıştık. Her zaman zamanında ve kaliteli çıktılar alıyoruz. Güvenilir ortaklarımız arasında ilk sırada yer alıyorlar.",
       rating: 5,
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-    },
-    {
-      name: "Zeynep Arslan",
-      role: "Ofis Sahibi",
-      comment: "Modern ofis tasarımımız için çalıştılar. Çalışanlarımızın verimliliği arttı ve iş ortamımız çok daha keyifli hale geldi. Kesinlikle tavsiye ederim.",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
-    },
-    {
-      name: "Ali Özkan",
-      role: "Apartman Yöneticisi",
-      comment: "Sitedeki ortak alanların yeniden tasarımı için hizmet aldık. Hem estetik hem de pratik bir çözüm sundular. Komşularımız çok memnun kaldı.",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
-    },
-    {
-      name: "Selin Yıldız",
-      role: "Kafe Sahibi",
-      comment: "Kafemizin iç mekan tasarımını yaptılar. Müşterilerimiz çok beğeniyor ve sosyal medyada fotoğraf çekmek için geliyorlar. İşimiz gerçekten büyüdü!",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face"
     }
   ];
 
@@ -120,6 +98,13 @@ const HomePage: React.FC = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const openWhatsApp = () => {
+    const message = "Merhaba, mimarlık hizmetleriniz hakkında bilgi almak istiyorum.";
+    const phoneNumber = "905380811715";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
   };
 
   return (
@@ -320,7 +305,7 @@ const HomePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
                 <div className="flex mb-4">
@@ -372,27 +357,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Certifications Section */}
-      <CertificationsSection />
-
-      {/* Process Section */}
-      <ProcessSection />
-
-      {/* Pricing Section */}
-      <PricingSection />
-
-      {/* FAQ Section */}
-      <FAQSection />
-
-      {/* References Section */}
-      <ReferencesSection />
-
-      {/* Stats Detail Section */}
-      <StatsDetailSection />
-
-      {/* Social Media Section */}
-      <SocialMediaSection />
     </div>
   );
 };

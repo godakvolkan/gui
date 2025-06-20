@@ -1,81 +1,116 @@
 import React from 'react';
-import { Phone, Mail, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Twitter, Youtube, Facebook, Linkedin, MessageCircle } from 'lucide-react';
 
-type PageType = 'ana-sayfa' | 'hakkimizda' | 'projeler' | 'hizmetler' | 'iletisim';
+const Footer: React.FC = () => {
+  const openWhatsApp = () => {
+    const message = "Merhaba, mimarlık hizmetleriniz hakkında bilgi almak istiyorum.";
+    const phoneNumber = "905380811715";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
 
-interface FooterProps {
-  navigateToPage: (page: PageType) => void;
-  openWhatsApp: () => void;
-}
+  const socialMedia = [
+    { icon: <Instagram className="w-5 h-5" />, name: "Instagram", url: "https://www.instagram.com/gdk_vlkn/", color: "hover:text-pink-500" },
+    { icon: <Twitter className="w-5 h-5" />, name: "Twitter", url: "https://x.com/gdk_vlkn", color: "hover:text-blue-400" },
+    { icon: <Youtube className="w-5 h-5" />, name: "YouTube", url: "https://www.youtube.com/@VOLKANGODAK", color: "hover:text-red-500" },
+    { icon: <Linkedin className="w-5 h-5" />, name: "LinkedIn", url: "#", color: "hover:text-blue-600" },
+    { icon: <Facebook className="w-5 h-5" />, name: "Facebook", url: "#", color: "hover:text-blue-500" }
+  ];
 
-const Footer: React.FC<FooterProps> = ({ navigateToPage, openWhatsApp }) => (
-    <footer className="bg-gray-900 text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  return (
+    <footer className="bg-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8">
+          {/* Company Info */}
           <div className="md:col-span-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-4">
-              MIMAR STUDIO
-            </div>
-            <p className="text-gray-400 mb-6 max-w-md">
-              Modern mimari çözümler ile hayallerinizi gerçeğe dönüştürüyoruz. 
-              12 yıllık deneyimimiz ile güvenilir ve kaliteli hizmet sunuyoruz.
+            <h3 className="text-2xl font-bold mb-4">Mimar Tuna</h3>
+            <p className="text-gray-300 mb-6">
+              Modern mimari çözümler ve sürdürülebilir tasarım anlayışı ile 
+              hayalinizdeki projeleri gerçeğe dönüştürüyoruz.
             </p>
-            <div className="flex space-x-4">
-              <button className="bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition-colors">
-                <Phone className="w-5 h-5" />
-              </button>
-              <button className="bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition-colors">
-                <Mail className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={openWhatsApp}
-                className="bg-green-600 p-3 rounded-full hover:bg-green-700 transition-colors"
-              >
-                <MessageCircle className="w-5 h-5" />
-              </button>
+            <div className="space-y-3">
+              <div className="flex items-center">
+                <Phone className="w-5 h-5 text-blue-400 mr-3" />
+                <span className="text-gray-300">+90 (538) 081 17 15</span>
+              </div>
+              <div className="flex items-center">
+                <Mail className="w-5 h-5 text-blue-400 mr-3" />
+                <span className="text-gray-300">231118058@samsun.edu.tr</span>
+              </div>
+              <div className="flex items-center">
+                <MapPin className="w-5 h-5 text-blue-400 mr-3" />
+                <span className="text-gray-300">
+                  Çankaya Mahallesi, Mimarlık Sokak No:15<br />
+                  Çankaya / Ankara - Türkiye
+                </span>
+              </div>
             </div>
           </div>
-          
+
+          {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Hızlı Linkler</h4>
             <ul className="space-y-2">
-              {['Ana Sayfa', 'Hakkımızda', 'Projeler', 'Hizmetler', 'İletişim'].map((item, index) => {
-                const pageMap: { [key: string]: PageType } = {
-                  'Ana Sayfa': 'ana-sayfa',
-                  'Hakkımızda': 'hakkimizda',
-                  'Projeler': 'projeler',
-                  'Hizmetler': 'hizmetler',
-                  'İletişim': 'iletisim'
-                };
-                return (
-                  <li key={index}>
-                    <button 
-                      onClick={() => navigateToPage(pageMap[item])}
-                      className="text-gray-400 hover:text-white transition-colors"
-                    >
-                      {item}
-                    </button>
-                  </li>
-                );
-              })}
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Ana Sayfa</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Hakkımızda</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Projeler</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Hizmetler</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">İletişim</a></li>
             </ul>
           </div>
-          
+
+          {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">İletişim</h4>
-            <div className="space-y-3 text-gray-400">
-              <div>+90 (555) 123 45 67</div>
-              <div>info@mimarstudio.com</div>
-              <div>Çankaya, Ankara</div>
-            </div>
+            <h4 className="text-lg font-semibold mb-4">Hizmetlerimiz</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Ev Tasarımı</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">İç Mimarlık</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Ofis Tasarımı</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Restoran Tasarımı</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Proje Yönetimi</a></li>
+            </ul>
           </div>
         </div>
-        
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Mimar Studio. Tüm hakları saklıdır.</p>
+
+        {/* Social Media & Contact */}
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex space-x-4 mb-4 md:mb-0">
+              {socialMedia.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-gray-400 transition-colors ${social.color}`}
+                  aria-label={social.name}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+            
+            <button
+              onClick={openWhatsApp}
+              className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center"
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              WhatsApp'ta Yaz
+            </button>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p className="text-gray-400">
+            © 2024 Mimar Tuna. Tüm hakları saklıdır. | 
+            <a href="#" className="text-blue-400 hover:text-blue-300 ml-2">Gizlilik Politikası</a> | 
+            <a href="#" className="text-blue-400 hover:text-blue-300 ml-2">Kullanım Şartları</a>
+          </p>
         </div>
       </div>
     </footer>
   );
+};
 
 export default Footer;

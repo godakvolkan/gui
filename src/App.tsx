@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
@@ -6,9 +7,18 @@ import AboutPage from './components/About';
 import ProjectsPage from './components/ProjectsPage';
 import ServicesPage from './components/ServicesPage';
 import ContactPage from './components/Contact';
+import CertificationsPage from './components/CertificationsPage';
+import ProcessPage from './components/ProcessPage';
+import PricingPage from './components/PricingPage';
+import FAQPage from './components/FAQPage';
 import WhatsAppButton from './components/WhatsAppButton';
+import WeddingDiscountPage from './components/WeddingDiscountPage';
 
-type PageType = 'ana-sayfa' | 'hakkimizda' | 'projeler' | 'hizmetler' | 'iletisim';
+type PageType = 'ana-sayfa' | 'hakkimizda' | 'projeler' | 'hizmetler' | 'iletisim' | 'sertifikalar' | 'surec' | 'fiyatlandirma' | 'sss' | 'wedding-discount';
+
+interface HomePageProps {
+  navigateToPage: (page: PageType) => void;
+}
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>('ana-sayfa');
@@ -17,19 +27,13 @@ const App: React.FC = () => {
   const navigateToPage = (page: PageType) => {
     setCurrentPage(page);
     setIsMenuOpen(false);
-  };
-
-  const openWhatsApp = () => {
-    const message = "Merhaba, mimarlık hizmetleriniz hakkında bilgi almak istiyorum.";
-    const phoneNumber = "905551234567"; // WhatsApp numarası
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    window.scrollTo(0, 0);
   };
 
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'ana-sayfa':
-        return <HomePage />;
+        return <HomePage navigateToPage={navigateToPage} />;
       case 'hakkimizda':
         return <AboutPage />;
       case 'projeler':
@@ -38,8 +42,18 @@ const App: React.FC = () => {
         return <ServicesPage />;
       case 'iletisim':
         return <ContactPage />;
+      case 'sertifikalar':
+        return <CertificationsPage />;
+      case 'surec':
+        return <ProcessPage />;
+      case 'fiyatlandirma':
+        return <PricingPage />;
+      case 'sss':
+        return <FAQPage />;
+      case 'wedding-discount':
+        return <WeddingDiscountPage />;
       default:
-        return <HomePage />;
+        return <HomePage navigateToPage={navigateToPage} />;
     }
   };
 
@@ -51,9 +65,9 @@ const App: React.FC = () => {
         setIsMenuOpen={setIsMenuOpen}
         navigateToPage={navigateToPage}
       />
-      <WhatsAppButton openWhatsApp={openWhatsApp} />
+      <WhatsAppButton />
       {renderCurrentPage()}
-      <Footer navigateToPage={navigateToPage} openWhatsApp={openWhatsApp} />
+      <Footer />
     </div>
   );
 };

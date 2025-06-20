@@ -580,8 +580,7 @@ const TurkishArchitectWebsite: React.FC = () => {
                   <Mail className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
                     <div className="font-semibold text-gray-900">E-posta</div>
-                    <div className="text-gray-600">info@mimarstudio.com</div>
-                    <div className="text-gray-600">proje@mimarstudio.com</div>
+                    <div className="text-gray-600">231118058@samsun.edu.tr</div>
                   </div>
                 </div>
                 
@@ -753,7 +752,7 @@ const TurkishArchitectWebsite: React.FC = () => {
               <h4 className="text-lg font-semibold mb-4">İletişim</h4>
               <div className="space-y-3 text-gray-400">
                 <div>+90 (555) 123 45 67</div>
-                <div>info@mimarstudio.com</div>
+                <div>231118058@samsun.edu.tr</div>
                 <div>Çankaya, Ankara</div>
               </div>
             </div>
