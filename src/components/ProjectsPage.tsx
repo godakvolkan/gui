@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MapPin, Building, Eye, X, ArrowRight, Calendar, Users, Award, Star, Heart, Camera, Home, ShoppingBag, School, Hotel, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MapPin, Building, Eye, X, ArrowRight, Calendar, Award, Star, Heart, Camera, Home, ShoppingBag, School, CheckCircle, Sparkles, Zap, Target, Pen } from 'lucide-react';
 
 interface Project {
   id: number;
@@ -15,12 +15,32 @@ interface Project {
   client: string;
   features: string[];
   gallery: string[];
+  gradient: string;
+  bgGradient: string;
+  darkBgGradient: string;
 }
 
 const ProjectsPage: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeCategory, setActiveCategory] = useState('tümü');
   const [imageError, setImageError] = useState<{[key: number]: boolean}>({});
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('projects-section');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   const projects: Project[] = [
     {
@@ -40,13 +60,16 @@ const ProjectsPage: React.FC = () => {
         "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-blue-500 to-blue-600",
+      bgGradient: "from-blue-50 to-blue-100",
+      darkBgGradient: "from-blue-900/20 to-blue-800/20"
     },
     {
       id: 2,
       title: "Teknokent Ofis Binası",
       category: "ticari",
-      image: "https://images.unsplash.com/photo-1565792715-8f7c5dee2c53?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
       description: "Teknoloji firmaları için tasarlanmış modern ofis kompleksi. Esnek çalışma alanları ve yeşil bina sertifikası.",
       year: "2024",
       location: "Ankara, Türkiye",
@@ -56,16 +79,19 @@ const ProjectsPage: React.FC = () => {
       client: "Teknokent A.Ş.",
       features: ["Yeşil Bina Sertifikası", "Esnek Çalışma Alanları", "Ortak Kullanım Alanları", "Teknoloji Altyapısı"],
       gallery: [
-        "https://images.unsplash.com/photo-1565792715-8f7c5dee2c53?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&h=600&fit=crop"
-      ]
+        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1565792715-8f7c5dee2c53?w=800&h=600&fit=crop"
+      ],
+      gradient: "from-purple-500 to-purple-600",
+      bgGradient: "from-purple-50 to-purple-100",
+      darkBgGradient: "from-purple-900/20 to-purple-800/20"
     },
     {
       id: 3,
       title: "Kültür Merkezi",
       category: "kamu",
-      image: "https://images.unsplash.com/photo-1570896756434-23d7f02d6b4c?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&h=600&fit=crop",
       description: "Şehrin kültürel yaşamına katkı sağlayacak çok fonksiyonlu kültür ve sanat merkezi projesi.",
       year: "2023",
       location: "İstanbul, Türkiye",
@@ -75,16 +101,19 @@ const ProjectsPage: React.FC = () => {
       client: "İstanbul Büyükşehir Belediyesi",
       features: ["Konser Salonu", "Sergi Alanları", "Kütüphane", "Çok Amaçlı Salon"],
       gallery: [
+        "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1570896756434-23d7f02d6b4c?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-green-500 to-green-600",
+      bgGradient: "from-green-50 to-green-100",
+      darkBgGradient: "from-green-900/20 to-green-800/20"
     },
     {
       id: 4,
       title: "Seaside Restaurant",
       category: "ticari",
-      image: "https://images.unsplash.com/photo-1582267746897-6b3df7c78b45?w=800&h=600&fit=crop",
+      image: "/images/en-iyi-restoranlar-2.png",
       description: "Deniz manzaralı restoran tasarımı. Açık ve kapalı alanları birleştiren modern konsept.",
       year: "2023",
       location: "Çeşme, İzmir",
@@ -94,10 +123,13 @@ const ProjectsPage: React.FC = () => {
       client: "Özel Müşteri",
       features: ["Deniz Manzarası", "Açık Alan", "Modern Mutfak", "Bar Alanı"],
       gallery: [
-        "https://images.unsplash.com/photo-1582267746897-6b3df7c78b45?w=800&h=600&fit=crop",
+        "/images/en-iyi-restoranlar-2.png",
         "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-orange-500 to-orange-600",
+      bgGradient: "from-orange-50 to-orange-100",
+      darkBgGradient: "from-orange-900/20 to-orange-800/20"
     },
     {
       id: 5,
@@ -116,13 +148,16 @@ const ProjectsPage: React.FC = () => {
         "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-indigo-500 to-indigo-600",
+      bgGradient: "from-indigo-50 to-indigo-100",
+      darkBgGradient: "from-indigo-900/20 to-indigo-800/20"
     },
     {
       id: 6,
       title: "İlkokul Binası",
       category: "kamu",
-      image: "https://images.unsplash.com/photo-1581345018842-391516e0ecbf?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1562075775-649f2a67e54f?w=800&h=600&fit=crop",
       description: "Çocuk dostu tasarımı ile öne çıkan modern ilkokul binası projesi.",
       year: "2022",
       location: "Bursa, Türkiye",
@@ -132,10 +167,13 @@ const ProjectsPage: React.FC = () => {
       client: "Bursa İl Milli Eğitim Müdürlüğü",
       features: ["Çocuk Dostu Tasarım", "Spor Salonu", "Kütüphane", "Bahçe"],
       gallery: [
-        "https://images.unsplash.com/photo-1581345018842-391516e0ecbf?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1562075775-649f2a67e54f?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1523050854058-8df90110c9a1?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-emerald-500 to-emerald-600",
+      bgGradient: "from-emerald-50 to-emerald-100",
+      darkBgGradient: "from-emerald-900/20 to-emerald-800/20"
     },
     {
       id: 7,
@@ -154,7 +192,10 @@ const ProjectsPage: React.FC = () => {
         "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-pink-500 to-pink-600",
+      bgGradient: "from-pink-50 to-pink-100",
+      darkBgGradient: "from-pink-900/20 to-pink-800/20"
     },
     {
       id: 8,
@@ -173,7 +214,10 @@ const ProjectsPage: React.FC = () => {
         "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-cyan-500 to-cyan-600",
+      bgGradient: "from-cyan-50 to-cyan-100",
+      darkBgGradient: "from-cyan-900/20 to-cyan-800/20"
     },
     {
       id: 9,
@@ -192,13 +236,23 @@ const ProjectsPage: React.FC = () => {
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop"
-      ]
+      ],
+      gradient: "from-yellow-500 to-yellow-600",
+      bgGradient: "from-yellow-50 to-yellow-100",
+      darkBgGradient: "from-yellow-900/20 to-yellow-800/20"
     }
   ];
 
   const filteredProjects = activeCategory === 'tümü' 
     ? projects 
     : projects.filter(project => project.category === activeCategory);
+
+  const categories = [
+    { id: 'tümü', name: 'Tümü', icon: <Building className="w-5 h-5" />, count: projects.length },
+    { id: 'konut', name: 'Konut', icon: <Home className="w-5 h-5" />, count: projects.filter(p => p.category === 'konut').length },
+    { id: 'ticari', name: 'Ticari', icon: <ShoppingBag className="w-5 h-5" />, count: projects.filter(p => p.category === 'ticari').length },
+    { id: 'kamu', name: 'Kamu', icon: <School className="w-5 h-5" />, count: projects.filter(p => p.category === 'kamu').length }
+  ];
 
   const handleImageError = (projectId: number) => {
     setImageError(prev => ({ ...prev, [projectId]: true }));
@@ -215,6 +269,9 @@ const ProjectsPage: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
+      case 'Tamamlandı': return 'text-green-600 bg-green-100 dark:bg-green-900/20';
+      case 'Devam Ediyor': return 'text-orange-600 bg-orange-100 dark:bg-orange-900/20';
+      case 'Planlanıyor': return 'text-blue-600 bg-blue-100 dark:bg-blue-900/20';
       case 'Tamamlandı': return 'text-green-600 bg-green-50';
       case 'Devam Ediyor': return 'text-blue-600 bg-blue-50';
       case 'Planlama': return 'text-yellow-600 bg-yellow-50';
@@ -229,8 +286,10 @@ const ProjectsPage: React.FC = () => {
     }
   };
 
+  const pencilCursor = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-pencil'><path d='M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z'/><path d='m15 5 4 4'/></svg>") 0 24, auto`;
+
   return (
-    <div className="pt-16">
+    <div className="pt-16" style={{ cursor: pencilCursor }}>
       {/* Projects Hero */}
       <section className="relative py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>

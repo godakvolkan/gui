@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -13,60 +14,28 @@ import PricingPage from './components/PricingPage';
 import FAQPage from './components/FAQPage';
 import WhatsAppButton from './components/WhatsAppButton';
 import WeddingDiscountPage from './components/WeddingDiscountPage';
-
-type PageType = 'ana-sayfa' | 'hakkimizda' | 'projeler' | 'hizmetler' | 'iletisim' | 'sertifikalar' | 'surec' | 'fiyatlandirma' | 'sss' | 'wedding-discount';
-
-interface HomePageProps {
-  navigateToPage: (page: PageType) => void;
-}
+import ThemeToggle from './components/ThemeToggle';
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<PageType>('ana-sayfa');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navigateToPage = (page: PageType) => {
-    setCurrentPage(page);
-    setIsMenuOpen(false);
-    window.scrollTo(0, 0);
-  };
-
-  const renderCurrentPage = () => {
-    switch (currentPage) {
-      case 'ana-sayfa':
-        return <HomePage navigateToPage={navigateToPage} />;
-      case 'hakkimizda':
-        return <AboutPage />;
-      case 'projeler':
-        return <ProjectsPage />;
-      case 'hizmetler':
-        return <ServicesPage />;
-      case 'iletisim':
-        return <ContactPage />;
-      case 'sertifikalar':
-        return <CertificationsPage />;
-      case 'surec':
-        return <ProcessPage />;
-      case 'fiyatlandirma':
-        return <PricingPage />;
-      case 'sss':
-        return <FAQPage />;
-      case 'wedding-discount':
-        return <WeddingDiscountPage />;
-      default:
-        return <HomePage navigateToPage={navigateToPage} />;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation 
-        currentPage={currentPage}
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        navigateToPage={navigateToPage}
-      />
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+      <Navigation />
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/hakkimizda" element={<AboutPage />} />
+          <Route path="/projeler" element={<ProjectsPage />} />
+          <Route path="/hizmetler" element={<ServicesPage />} />
+          <Route path="/iletisim" element={<ContactPage />} />
+          <Route path="/sertifikalar" element={<CertificationsPage />} />
+          <Route path="/surec" element={<ProcessPage />} />
+          <Route path="/fiyatlandirma" element={<PricingPage />} />
+          <Route path="/sss" element={<FAQPage />} />
+          <Route path="/yeni-evli-indirimi" element={<WeddingDiscountPage />} />
+        </Routes>
+      </main>
       <WhatsAppButton />
-      {renderCurrentPage()}
+      <ThemeToggle />
       <Footer />
     </div>
   );
